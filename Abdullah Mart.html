@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdullah Motors | The 2026 Collection</title>
+
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3202/3202926.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --vintage-cream: #fdfbf7;
+            --deep-onyx: #121212;
+            --gold-leaf: #c5a059;
+            --border-tan: #e8e2d9;
+        }
+
+        body {
+            background-color: var(--vintage-cream);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--deep-onyx);
+            transition: background 0.5s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        .brand-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Auth Screens --- */
+        .auth-overlay {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(rgba(253, 251, 247, 0.85), rgba(253, 251, 247, 0.85)),
+                url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=1500') center/cover;
+        }
+
+        .classic-auth-card {
+            background: white;
+            border: 1px solid var(--border-tan);
+            padding: 3rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Navbar --- */
+        .classic-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-tan);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--deep-onyx);
+            text-decoration: none;
+        }
+
+        /* --- Modern Hamburger Menu --- */
+        .offcanvas {
+            background: var(--vintage-cream);
+            border-right: 1px solid var(--border-tan);
+            width: 300px !important;
+        }
+
+        .menu-link {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            padding: 1rem 0;
+            color: var(--deep-onyx);
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid var(--border-tan);
+            transition: 0.3s;
+        }
+
+        .menu-link:hover {
+            color: var(--gold-leaf);
+            padding-left: 10px;
+        }
+
+        /* --- Responsive Car Grid --- */
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        .car-card {
+            background: white;
+            border: 1px solid var(--border-tan);
+            overflow: hidden;
+            transition: 0.4s ease;
+            cursor: pointer;
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .car-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .car-body {
+            padding: 20px;
+        }
+
+        .car-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .car-desc {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .car-price {
+            font-weight: 700;
+            color: var(--gold-leaf);
+        }
+
+        /* --- Footer Socials --- */
+        .classic-footer {
+            background: var(--deep-onyx);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 50px;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: white;
+            transition: 0.3s;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            color: var(--gold-leaf);
+            transform: translateY(-3px);
+        }
+
+        .palette-fab {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--border-tan);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="view-signup" class="auth-overlay">
+        <div class="classic-auth-card">
+            <h2 class="mb-4">Membership</h2>
+            <input type="text" id="regName" class="form-control mb-3 py-3 rounded-0" placeholder="Full Name">
+            <input type="email" id="regEmail" class="form-control mb-3 py-3 rounded-0" placeholder="Email">
+            <input type="password" id="regPass" class="form-control mb-4 py-3 rounded-0" placeholder="Password">
+            <button class="btn btn-dark w-100 py-3 rounded-0" onclick="app.toLogin()">CREATE ACCOUNT</button>
+            <p class="mt-4 small">Already a member? <a href="#" onclick="app.showLogin()" class="text-muted">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="view-login" class="auth-overlay hidden">
+        <div class="classic-auth-card">
+            <h2 class="mb-4">Sign In</h2>
+            <input type="text" id="logUser" class="form-control mb-3 py-3 rounded-0" placeholder="Email/Username">
+            <input type="password" id="logPass" class="form-control mb-4 py-3 rounded-0" placeholder="Password">
+            <button class="btn btn-dark w-100 py-3 rounded-0" onclick="app.toMain()">ENTER SHOWROOM</button>
+        </div>
+    </div>
+
+    <div id="view-main" class="hidden">
+        <nav class="classic-nav">
+            <div class="container d-flex justify-content-between align-items-center">
+                <i class="bi bi-list fs-2 cursor-pointer" data-bs-toggle="offcanvas" data-bs-target="#sideMenu"></i>
+                <a href="#" class="brand-logo brand-font">Abdullah Motors</a>
+                <div class="position-relative cursor-pointer" data-bs-toggle="offcanvas" data-bs-target="#cartPanel">
+                    <i class="bi bi-bag fs-3"></i>
+                    <span id="badge"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                        style="font-size: 0.6rem;">0</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container py-5">
+            <div class="text-center mb-5">
+                <h1 class="display-4">Prestige Inventory</h1>
+                <p class="text-muted italic">A selection of 100 masterpieces for the modern connoisseur.</p>
+            </div>
+            <div class="car-grid" id="carDisplay"></div>
+        </main>
+
+        <footer class="classic-footer">
+            <div class="container text-center">
+                <h2 class="brand-font mb-4">Abdullah Motors</h2>
+                <div class="mb-5 d-flex justify-content-center flex-wrap">
+                    <a href="https://www.instagram.com/_abdullah_jutt_5" target="_blank" class="social-icon"><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="social-icon"><i
+                            class="bi bi-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank" class="social-icon"><i
+                            class="bi bi-twitter-x"></i></a>
+                    <a href="https://www.youtube.com/@AJ_Islamicvideos512" target="_blank" class="social-icon"><i class="bi bi-youtube"></i></a>
+                </div>
+                <p class="small text-secondary">© 2026 Abdullah Motors International. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="offcanvas offcanvas-start" id="sideMenu">
+        <div class="offcanvas-header border-bottom p-4">
+            <h5 class="brand-font fs-3 m-0">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-4 pt-2">
+            <a href="#" class="menu-link">The Fleet</a>
+            <a href="#" class="menu-link">Classic Restorations</a>
+            <a href="#" class="menu-link">Global Logistics</a>
+            <a href="#" class="menu-link">Our Heritage</a>
+            <hr>
+            <a href="#" onclick="location.reload()" class="menu-link text-danger">Logout</a>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" id="cartPanel">
+        <div class="offcanvas-header border-bottom p-4">
+            <h5 class="brand-font fs-3 m-0">Reserved</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body" id="cartContent">
+            <p class="text-center text-muted mt-5">The collection is empty.</p>
+        </div>
+        <div class="p-4 border-top">
+            <div class="d-flex justify-content-between h4 brand-font mb-4">
+                <span>Value:</span>
+                <span>$<span id="totalPrice">0</span></span>
+            </div>
+            <button class="btn btn-dark w-100 py-3 rounded-0">REQUEST INFORMATION</button>
+        </div>
+    </div>
+
+    <button class="palette-fab" onclick="app.pickColor()"><i class="bi bi-palette fs-4"></i></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const app = {
+            cart: [],
+            // 100 Car Inventory with Diverse Images
+            data: Array.from({ length: 100 }, (_, i) => {
+                const types = ["Vintage Sport", "Modern Hypercar", "Luxury Sedan", "Classic SUV", "Grand Tourer"];
+                const brands = ["Aston Martin", "Ferrari", "Porsche", "Mercedes-Benz", "Lamborghini", "Bentley"];
+                const b = brands[i % brands.length];
+                const t = types[i % types.length];
+                return {
+                    id: i,
+                    name: `${b} ${t} - V${26 + i}`,
+                    price: (Math.random() * 1200000 + 95000).toLocaleString(),
+                    desc: `Exquisite craftsmanship meets raw power in this ${b}. A true icon of ${t} engineering.`,
+                    img: `https://images.unsplash.com/photo-${[
+                        '1525609004556-c46c7d6cf0a3', '1503376780353-7e6692767b70',
+                        '1583121274602-3e2820c69888', '1494976388531-d1058494cdd8',
+                        '1552519507-da3b142c6e3d', '1542362567-b05e8180f6e6',
+                        '1614162692292-7ac56d7f7f1e', '1618843479313-40f8afb4b4d8'
+                    ][i % 8]}?auto=format&fit=crop&q=80&w=500`
+                };
+            }),
+
+            showLogin() {
+                document.getElementById('view-signup').classList.add('hidden');
+                document.getElementById('view-login').classList.remove('hidden');
+            },
+
+            toLogin() {
+                if (document.getElementById('regName').value) {
+                    alert("Account Created!");
+                    this.showLogin();
+                }
+            },
+
+            toMain() {
+                if (document.getElementById('logUser').value) {
+                    document.getElementById('view-login').classList.add('hidden');
+                    document.getElementById('view-main').classList.remove('hidden');
+                    this.render();
+                }
+            },
+
+            render() {
+                const container = document.getElementById('carDisplay');
+                container.innerHTML = this.data.map(c => `
+                    <div class="car-card" onclick="app.addToCart(${c.id})">
+                        <div class="car-img"><img src="./Pictures/Car-00000.webp" loading="lazy"></div>
+                        <div class="car-body">
+                            <h3 class="car-title">${c.name}</h3>
+                            <p class="car-desc">${c.desc}</p>
+                            <div class="car-price">$${c.price}</div>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            addToCart(id) {
+                const item = this.data.find(x => x.id === id);
+                this.cart.push(item);
+                this.updateUI();
+            },
+
+            updateUI() {
+                document.getElementById('badge').innerText = this.cart.length;
+                const panel = document.getElementById('cartContent');
+                let total = 0;
+                panel.innerHTML = this.cart.map(item => {
+                    total += parseInt(item.price.replace(/,/g, ''));
+                    return `
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="${item.img}" style="width:60px; height:60px; object-fit:cover;" class="me-3 border">
+                            <div class="flex-grow-1"><div class="small fw-bold">${item.name}</div></div>
+                            <div class="small fw-bold">$${item.price}</div>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('totalPrice').innerText = total.toLocaleString();
+            },
+
+            pickColor() {
+                const color = prompt("Tint the canvas (e.g. #f4f4f4, whitesmoke, ivory):", "#fdfbf7");
+                if (color) document.body.style.backgroundColor = color;
+            }
+        };
+    </script>
+</body>
+
+</html>
